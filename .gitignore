@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/FlyerDemoClient/FlyerDemoClient/obj
+/FlyerDemoClient/FlyerDemoClient/bin/Debug/netcoreapp3.0
+/FlyerDemoClient/.vs/FlyerDemoClient/v16

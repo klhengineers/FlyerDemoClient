@@ -1,0 +1,29 @@
+﻿<Window x:Class="FlyerDemoClient.Views.AddProductForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlyerDemoClient.Views"
+        mc:Ignorable="d"
+        Title="AddProductForm" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Label"/>
+            <TextBox Text="{Binding Label, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="SKU"/>
+            <TextBox Text="{Binding SKU, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Manufacturer"/>
+            <TextBox Text="{Binding Manufacturer, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Description"/>
+            <TextBox Text="{Binding Description, Mode=TwoWay}" MinLines="3" MaxLines="6"/>
+        </StackPanel>
+        <Button Click="Add_Click" Content="Add"/>
+        <Button IsCancel="True" Content="Cancel"/>
+    </StackPanel>
+</Window>
