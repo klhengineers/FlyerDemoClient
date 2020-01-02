@@ -10,15 +10,16 @@ namespace FlyerDemoClient.ViewModels
     {
         Dictionary<string, dynamic> Model { get; set; }
 
-        public List<ItemPropertyViewModel> Properties => ((JsonElement)Model["properties"])
-                                                                      .EnumerateObject().AsEnumerable()
-                                                                      .Select(KvpToTuple)
-                                                                      .ToList();
+        public List<ItemPropertyViewModel> Properties { get; set; }
 
 
         public SchemaViewModel(Dictionary<string, dynamic> model)
         {
             Model = model;
+            Properties = ((JsonElement)Model["properties"])
+                            .EnumerateObject().AsEnumerable()
+                            .Select(KvpToTuple)
+                            .ToList();
         }
 
         private ItemPropertyViewModel KvpToTuple(JsonProperty kvp)

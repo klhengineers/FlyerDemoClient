@@ -26,6 +26,7 @@ namespace FlyerDemoClient.Views
             InitializeComponent();
             this.DataContext = new LoginViewModel();
             Browser.RequestHandler = new RequestHandler((LoginViewModel)this.DataContext);
+            Browser.Focus();
             ((LoginViewModel)this.DataContext).CodeObtained += (s, e) => Dispatcher.Invoke(() => { this.DialogResult = true; this.Close();});
         }
     }

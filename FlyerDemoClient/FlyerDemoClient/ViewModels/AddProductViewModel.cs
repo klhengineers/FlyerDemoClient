@@ -18,18 +18,6 @@ namespace FlyerDemoClient.ViewModels
             this.ProductSchemas = temp;
         }
 
-        public async Task<bool> PostProduct()
-        {
-            Dictionary<string, dynamic> ProductPropertyDict = schema!.Properties.ToDictionary(prop => prop.Name, prop => (dynamic)prop.Value );
-
-            ProductPropertyDict["images"] = ((string)ProductPropertyDict["images"]).Split(",").Select(s => s.Trim()).ToList();
-
-            ProductPropertyDict["attachments"] = ((string)ProductPropertyDict["attachments"]).Split(",").Select(s => s.Trim()).ToList();
-
-            var result = await Data.Post("products", ProductPropertyDict);
-            return result != null;
-        }
-
         public Product Model { get; set; }
 
         public List<string> ProductSchemas
@@ -64,5 +52,23 @@ namespace FlyerDemoClient.ViewModels
         }
         private SchemaViewModel? _schema;
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public async Task<bool> PostProduct()
+        {
+            Dictionary<string, dynamic> ProductPropertyDict = schema!.Properties.ToDictionary(prop => prop.Name, prop => (dynamic)prop.Value);
+
+            ProductPropertyDict["Images"] = ((string)ProductPropertyDict["Images"]).Split(",").Select(s => s.Trim()).ToList();
+
+            ProductPropertyDict["Attachments"] = ((string)ProductPropertyDict["Attachments"]).Split(",").Select(s => s.Trim()).ToList();
+
+            ProductPropertyDict["$type"] = $"Flyer.Common.Models.{_SelectedSchema}, Flyer.Common";
+
+            ProductPropertyDict = ProductPropertyDict
+                .OrderByDescending(kvp => kvp.Key.StartsWith("$"))
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            var result = await Data.Post("products", ProductPropertyDict);
+            return result != null;
+        }
     }
 }
