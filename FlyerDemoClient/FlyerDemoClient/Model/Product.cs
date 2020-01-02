@@ -11,7 +11,7 @@ namespace FlyerDemoClient.Model
         public string Type { get; set; } = null!;
         public string SKU { get; set; } = null!;
         public string Label { get; set; } = null!;
-        public string Manufacturer { get; set; } = null!;
+        public string ManufacturerID { get; set; } = null!;
         public string Description { get; set; } = null!;
 
         public string[] Attachments { get; set; } = new string[] { };

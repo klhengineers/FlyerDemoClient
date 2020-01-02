@@ -3,6 +3,7 @@
 ################################################################################
 
 /FlyerDemoClient/FlyerDemoClient/obj
+/FlyerDemoClient/FlyerDemoClient/bin
 /FlyerDemoClient/FlyerDemoClient/bin/Debug/netcoreapp3.0
 /FlyerDemoClient/.vs/FlyerDemoClient/v16
 /.vs
