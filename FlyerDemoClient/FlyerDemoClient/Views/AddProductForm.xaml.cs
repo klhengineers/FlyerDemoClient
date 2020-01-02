@@ -1,4 +1,5 @@
 ﻿using FlyerDemoClient.Model;
+using FlyerDemoClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,16 +22,17 @@ namespace FlyerDemoClient.Views
         public AddProductForm()
         {
             InitializeComponent();
-            DataContext = new Product
-            {
+            DataContext = new AddProductViewModel(new Product() { 
+            
                 Attachments = new string[] { },
                 Images = new string[] { "https://www.economist.com/sites/default/files/images/print-edition/20150905_TQP001_0.jpg"},
                 Type = "Flyer.Common.Models.Widget, Flyer.Common"
-            };
+            });
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+
             DialogResult = true;
             Close();
         }

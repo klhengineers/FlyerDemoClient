@@ -6,24 +6,34 @@
         xmlns:local="clr-namespace:FlyerDemoClient.Views"
         mc:Ignorable="d"
         Title="AddProductForm" Height="450" Width="800">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Label"/>
-            <TextBox Text="{Binding Label, Mode=TwoWay}"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height ="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label HorizontalAlignment="Center"> Product Type</Label>
+            <ComboBox ItemsSource="{Binding ProductSchemas}"
+                      SelectedValue="{Binding SelectedSchema}"
+                      Height="25"
+                      Width="70"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="SKU"/>
-            <TextBox Text="{Binding SKU, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Manufacturer"/>
-            <TextBox Text="{Binding Manufacturer, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Description"/>
-            <TextBox Text="{Binding Description, Mode=TwoWay}" MinLines="3" MaxLines="6"/>
-        </StackPanel>
-        <Button Click="Add_Click" Content="Add"/>
-        <Button IsCancel="True" Content="Cancel"/>
-    </StackPanel>
+        <ScrollViewer VerticalAlignment ="Stretch" Margin="5" Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding schema.Properties}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBox Text="{Binding Value}" Width="30" Margin="5"/>
+                            <TextBlock Text="{Binding ValueType}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button Click="Add_Click" Content="Add" Grid.Row="2"/>
+        <Button IsCancel="True" Content="Cancel" Grid.Row="3"/>
+    </Grid>
 </Window>
