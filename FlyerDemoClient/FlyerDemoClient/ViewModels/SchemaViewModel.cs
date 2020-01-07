@@ -27,7 +27,8 @@ namespace FlyerDemoClient.ViewModels
             string prop = kvp.Value.GetProperty("type").ValueKind switch
             {
                 JsonValueKind.String => kvp.Value.GetProperty("type").GetString(),
-                JsonValueKind.Array => kvp.Value.GetProperty("type").EnumerateArray().First().GetString() + "?"
+                JsonValueKind.Array => kvp.Value.GetProperty("type").EnumerateArray().First().GetString() + "?",
+                _ => throw new NotImplementedException()
             };
             return new ItemPropertyViewModel() { Name = kvp.Name, ValueType = prop };
 

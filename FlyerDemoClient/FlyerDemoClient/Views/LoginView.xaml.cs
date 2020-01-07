@@ -60,7 +60,7 @@ namespace FlyerDemoClient.Views
         }
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response) =>
-            null;
+            null!;
 
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect) =>
             false;

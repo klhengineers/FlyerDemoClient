@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button Click="Refresh_Click">Refresh</Button>
-            <Button Click="Add_Click">Add</Button>
+            <Button Click="Add_Click" IsEnabled="{Binding LoggedIn}">Add</Button>
             <Button Click="Login_Click">Login</Button>
             <TextBlock Name="lblAuthStatus" Text="{Binding AuthStatus}" Padding="5" />
         </StackPanel>
@@ -25,7 +25,8 @@
                         <StackPanel>
                             <TextBlock Text="{Binding Model.Label}"/>
                             <TextBlock Text="{Binding Model.SKU}"/>
-                            <TextBlock Text="{Binding Model.ManufacturerID}"/>
+                            <TextBlock Text="{Binding Model.Type}"/>
+                            <TextBlock Text="{Binding Model.Manufacturer}"/>
                             <TextBlock Text="{Binding Model.Description}"/>
                             <ListView ItemsSource="{Binding Model.Attachments}">
                                 <ListView.ItemTemplate>
@@ -38,6 +39,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
+                            <Button IsEnabled="{Binding LoggedIn, RelativeSource={RelativeSource AncestorType=Window}}" Click="Button_Click">Edit</Button>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

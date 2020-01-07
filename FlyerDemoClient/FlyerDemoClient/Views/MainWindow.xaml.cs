@@ -32,22 +32,23 @@ namespace FlyerDemoClient
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private readonly HttpClient _httpClient = new HttpClient();
         private readonly HttpClient _AuthClient = new HttpClient();
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = null!;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            _httpClient.BaseAddress = new Uri("http://localhost:7071/api/");
             _AuthClient.BaseAddress = new Uri("https://login.microsoftonline.com/klhengrs.onmicrosoft.com");
 
             Loaded += MainWindow_Loaded;
         }
 
         public ObservableCollection<ProductViewModel> Products { get; } = new ObservableCollection<ProductViewModel>();
+
+        public bool LoggedIn => AuthStatus == "Signed in";
+
         private string _AuthStatus = "Not signed in";
         public string AuthStatus
         {
@@ -60,6 +61,7 @@ namespace FlyerDemoClient
             {
                 _AuthStatus = value;
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs("AuthStatus"));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("LoggedIn"));
             }
         }
 
@@ -119,14 +121,16 @@ namespace FlyerDemoClient
                 HttpRequestMessage msg = new HttpRequestMessage(HttpMethod.Get,
                                                                 "https://login.microsoftonline.com/klhengrs.onmicrosoft.com/oauth2/v2.0/token");
                 //msg.Headers.Add("Host", "login.microsoftonline.com");
-                var dict = new Dictionary<string, string>();
-                dict["redirect_uri"] = "http://localhost:7071/";
-                dict["client_id"] = "ae52f345-85b1-40fb-86d1-987514fb4673";
-                dict["client_secret"] = "AKwuUXSH5iB?X31LJ]Va?8S:lbC8YZVA";
-                //dict["token_endpoint"] = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token";
-                dict["scope"] = "https://funcapi.klhengrs.onmicrosoft.com/user_impersonation";
-                dict["grant_type"] = "authorization_code";
-                dict["code"] = code!;
+                var dict = new Dictionary<string, string>
+                {
+                    ["redirect_uri"] = "http://localhost:7071/",
+                    ["client_id"] = "ae52f345-85b1-40fb-86d1-987514fb4673",
+                    ["client_secret"] = "AKwuUXSH5iB?X31LJ]Va?8S:lbC8YZVA",
+                    //dict["token_endpoint"] = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token";
+                    ["scope"] = "https://funcapi.klhengrs.onmicrosoft.com/user_impersonation",
+                    ["grant_type"] = "authorization_code",
+                    ["code"] = code!
+                };
 
                 msg.Content = new FormUrlEncodedContent(dict);
 
@@ -135,10 +139,18 @@ namespace FlyerDemoClient
 
                 var BodyDict = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(await response.Content.ReadAsStreamAsync());
                 Data.AddAuthentication(((JsonElement)BodyDict["access_token"]).GetString());
-                var s = await Data.Get<dynamic>("authenticated");
+                await Data.Get<dynamic>("authenticated");
 
 
             }
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddProductForm();
+            ((AddProductViewModel)dialog.DataContext).Model = ((dynamic)sender).DataContext.Model;
+            if (dialog.ShowDialog() ?? false) await((AddProductViewModel)dialog.DataContext).PatchProduct();
+            Refresh_Click(sender, e);
         }
     }
 }

@@ -21,12 +21,12 @@
                       Width="70"/>
         </StackPanel>
         <ScrollViewer VerticalAlignment ="Stretch" Margin="5" Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding schema.Properties}">
+            <ItemsControl ItemsSource="{Binding Schema.Properties}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}"/>
-                            <TextBox Text="{Binding Value}" Width="30" Margin="5"/>
+                            <TextBox Text="{Binding Value}" Width="100" Margin="5"/>
                             <TextBlock Text="{Binding ValueType}"/>
                         </StackPanel>
                     </DataTemplate>
