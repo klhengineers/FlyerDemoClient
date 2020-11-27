@@ -22,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="cef.redist.x64" Version="75.1.14" />
     <PackageReference Include="cef.redist.x86" Version="75.1.14" />
-    <PackageReference Include="CefSharp.Common" Version="75.1.143" />
+    <PackageReference Include="CefSharp.Common" Version="86.0.241" />
     <PackageReference Include="CefSharp.Wpf" Version="75.1.143" />
     <PackageReference Include="Microsoft.Azure.Management.Fluent" Version="1.29.0" />
   </ItemGroup>
